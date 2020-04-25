@@ -11,9 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-//import edu.umsl.corrina_lakin.ShpList.R
-//import edu.umsl.corrina_lakin.ShpList.data.models.ShpItem
-//import edu.umsl.corrina_lakin.ShpList.utils.DataRepository
 import edu.umsl.corrina_lakin.proj3shplist.R
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpItem
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
@@ -56,30 +53,30 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
         val context: Context = v.context
-        val toDoName: TextView = v.findViewById(R.id.tv_todo_name)
+        val shpListName: TextView = v.findViewById(R.id.tv_shpList_name)
         val moreButton: ImageView = v.findViewById(R.id.btn_more)
         private lateinit var ShpItem: ShpItem
         private val repository = DataRepository
 
         fun bindShpList(item: ShpItem) {
             ShpItem = item
-            toDoName.text = item.itemName
+            shpListName.text = item.itemName
 
             val color =
                 if (item.isCompleted) R.color.colorAccent
                 else  R.color.colorPrimary
 
             val actualColor = ContextCompat.getColor(context, color)
-            toDoName.setTextColor(actualColor)
+            shpListName.setTextColor(actualColor)
 
-            toDoName.setOnClickListener(this)
+            shpListName.setOnClickListener(this)
             moreButton.setOnClickListener(this)
         }
 
         override fun onClick(view: View) {
             // check which view was clicked
             when (view) {
-                toDoName -> navigateToItemList()
+                shpListName -> navigateShpListItemList()
                 moreButton -> createPopupMenu()
             }
         }
@@ -133,7 +130,7 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
         }
 
 
-        private fun navigateToItemList() {
+        private fun navigateShpListItemList() {
         }
 
         private fun toast(message: String, duration: Int = Toast.LENGTH_LONG) {

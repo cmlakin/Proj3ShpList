@@ -39,10 +39,10 @@ class DashboardActivity : AppCompatActivity() {
     private fun createNewShpList() {
         val dialog = AlertDialog.Builder(this)
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
-        val toDoName = view.findViewById<EditText>(R.id.ev_todo)
+        val shpListName = view.findViewById<EditText>(R.id.ev_shpList)
         dialog.setView(view)
         dialog.setPositiveButton("Add") { _ : DialogInterface, _ : Int ->
-            val text = toDoName.text.toString()
+            val text = shpListName.text.toString()
             if (text.isNotEmpty()){
                 addShpList(text)
             }
@@ -54,8 +54,8 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun addShpList(name: String) {
-        val toDo = ShpList(name = name)
-        repository.addShpList(toDo) {
+        val shpList = ShpList(name = name)
+        repository.addShpList(shpList) {
             adapter.addItem(it)
         }
     }

@@ -11,7 +11,6 @@ import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpItem
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 import kotlinx.android.synthetic.main.activity_item.*
-import kotlinx.coroutines.NonCancellable.isCompleted
 import java.util.*
 
 class ItemActivity  : AppCompatActivity() {
@@ -54,18 +53,19 @@ class ItemActivity  : AppCompatActivity() {
             }
         }
         dialog.setNegativeButton("Cancel") { _ : DialogInterface, _ : Int ->
-            //shplist add removing item here
+            // TODO shplist add removing item here
         }
         dialog.show()
     }
 
     private fun addShpListItem(name: String) {
+    //private fun addShpListItem(name: String, quantity: Long, price: Double) {
         val now = Date()
         val shpList = ShpItem(
             shpListId = shpList.id,
             itemName = name,
-//            itemQuantity = ,
-//            itemPrice = ,
+//            itemQuantity = quantity,
+//            itemPrice = price,
             isCompleted = false,
             createdAt = now.time
         )
