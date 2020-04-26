@@ -54,7 +54,7 @@ class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
         val context: Context = v.context
-        val shpListName: TextView = v.findViewById(R.id.tv_todo_name)
+        val shpListName: TextView = v.findViewById(R.id.tv_shpList_name)
         val moreButton: ImageView = v.findViewById(R.id.btn_more)
         private lateinit var shpList: ShpList
         private val repository = DataRepository
@@ -73,7 +73,7 @@ class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
                 moreButton -> createPopupMenu()
             }
         }
-
+        // TODO need to set up an update and delete of original list
         override fun onMenuItemClick(item: MenuItem): Boolean {
             // check which menu item was clicked
             return when (item.itemId) {

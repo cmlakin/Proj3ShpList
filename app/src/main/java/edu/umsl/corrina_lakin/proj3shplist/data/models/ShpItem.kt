@@ -15,8 +15,8 @@ data class ShpItem(
     @ColumnInfo(index = true)
     var shpListId : Long,
     var itemName: String,
-    var itemQuantity: Long,
-    var itemPrice: Double,
+//    var itemQuantity: Long,
+//    var itemPrice: Double,
     var isCompleted: Boolean,
     var createdAt: Long
 ) {
