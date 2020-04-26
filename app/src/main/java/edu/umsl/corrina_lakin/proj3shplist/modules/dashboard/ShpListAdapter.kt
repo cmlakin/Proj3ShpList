@@ -22,7 +22,7 @@ class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.rv_child_dashboard,
+            R.layout.rv_dashboard,
             parent,
             false
         )

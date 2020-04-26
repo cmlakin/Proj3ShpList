@@ -4,6 +4,9 @@
     <item android:id="@+id/markAsCompleted"
         android:title="Mark as Done" />
 
+    <item android:id="@+id/markAsNotCompleted"
+        android:title="Mark as Not Done" />
+
     <item android:id="@+id/deleteShpItem"
         android:title="Delete" />
 </menu>

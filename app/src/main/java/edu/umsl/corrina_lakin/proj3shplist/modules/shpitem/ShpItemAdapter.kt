@@ -53,30 +53,30 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
         val context: Context = v.context
-        val shpListName: TextView = v.findViewById(R.id.tv_shpList_name)
+        val shpItemName: TextView = v.findViewById(R.id.tv_shpItem_name)
         val moreButton: ImageView = v.findViewById(R.id.btn_more)
         private lateinit var ShpItem: ShpItem
         private val repository = DataRepository
 
         fun bindShpList(item: ShpItem) {
             ShpItem = item
-            shpListName.text = item.itemName
+            shpItemName.text = item.itemName
 
             val color =
                 if (item.isCompleted) R.color.colorAccent
                 else  R.color.colorPrimary
 
             val actualColor = ContextCompat.getColor(context, color)
-            shpListName.setTextColor(actualColor)
+            shpItemName.setTextColor(actualColor)
 
-            shpListName.setOnClickListener(this)
+            shpItemName.setOnClickListener(this)
             moreButton.setOnClickListener(this)
         }
 
         override fun onClick(view: View) {
             // check which view was clicked
             when (view) {
-                shpListName -> navigateShpListItemList()
+                shpItemName -> navigateShpListItemList()
                 moreButton -> createPopupMenu()
             }
         }
