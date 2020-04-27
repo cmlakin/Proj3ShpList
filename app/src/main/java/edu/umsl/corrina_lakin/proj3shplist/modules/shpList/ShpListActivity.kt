@@ -1,4 +1,4 @@
-package edu.umsl.corrina_lakin.proj3shplist.modules.dashboard
+package edu.umsl.corrina_lakin.proj3shplist.modules.shpList
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -14,7 +14,7 @@ import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
-class DashboardActivity : AppCompatActivity() {
+class ShpListActivity : AppCompatActivity() {
 
     private val repository= DataRepository
     private lateinit var adapter: ShpListAdapter
@@ -30,25 +30,38 @@ class DashboardActivity : AppCompatActivity() {
         rv_dashboard.adapter = adapter
 
         fab_dashboard.setOnClickListener {
-            createNewShpList()
+            createNewShpList(null)
         }
 
         getShpList()
     }
 
-    private fun createNewShpList() {
+    fun createNewShpList(sList: ShpList?) {
         val dialog = AlertDialog.Builder(this)
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val shpListName = view.findViewById<EditText>(R.id.ev_shpList)
+
+        if (sList != null) {
+            if (sList.name.isNotEmpty()){
+                shpListName.setText(sList.name)
+            }
+        }
         dialog.setView(view)
-        dialog.setPositiveButton("Add") { _ : DialogInterface, _ : Int ->
+        dialog.setPositiveButton("Save") { _ : DialogInterface, _ : Int ->
             val text = shpListName.text.toString()
             if (text.isNotEmpty()){
-                addShpList(text)
+                if (sList != null){
+                    sList.name = shpListName.text.toString()
+                    repository.updateShpList(sList) {
+                        adapter.notifyDataSetChanged()
+                    }
+                } else {
+                    addShpList(text)
+                }
             }
         }
         dialog.setNegativeButton("Cancel") { _ : DialogInterface, _ : Int ->
-            //TODO add removing item here
+
         }
         dialog.show()
     }

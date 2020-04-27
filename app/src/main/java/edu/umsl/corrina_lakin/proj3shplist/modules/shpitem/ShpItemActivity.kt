@@ -2,6 +2,7 @@ package edu.umsl.corrina_lakin.proj3shplist.modules.shpitem
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -11,29 +12,19 @@ import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpItem
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 import kotlinx.android.synthetic.main.activity_item.*
-import java.lang.Exception
 import java.util.*
 
-class ItemActivity  : AppCompatActivity() {
+class ShpItemActivity  : AppCompatActivity() {
 
     private val repository= DataRepository
     private lateinit var adapter: ShpItemAdapter
     lateinit var shpList: ShpList
-    private var curItem: ShpItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item)
 
         shpList = intent.getParcelableExtra(KEY_SHP_LIST)
-
-//        try{
-//            if (intent.getParcelableExtra<ShpItem>("item_extra") != null){
-//                curItem = intent.getParcelableExtra("item_extra")
-//            }
-//        } catch (e: Exception){
-//
-//        }
 
 
         setSupportActionBar(item_toolbar)
@@ -46,35 +37,33 @@ class ItemActivity  : AppCompatActivity() {
         rv_item.adapter = adapter
 
         fab_item.setOnClickListener{
-            createNewShpItem()
+            createNewShpItem(null)
         }
 
         getShpListInfo()
     }
 
-    private fun createNewShpItem() {
+     fun createNewShpItem(item: ShpItem?) {
         val dialog = AlertDialog.Builder(this)
         val view = layoutInflater.inflate(R.layout.dialog_child_dashboard, null)
         val shpItemName = view.findViewById<EditText>(R.id.ev_shpItemName)
         val shpItemQuantity = view.findViewById<EditText>(R.id.ev_shpItemQuantity)
         val shpItemPrice = view.findViewById<EditText>(R.id.ev_shpItemPrice)
 
-        if ( curItem is ShpItem) {
-            if (curItem!!.itemName != "") {
-                shpItemName.setText(curItem!!.itemName)
+        if (item != null) {
+            if (item.itemName.isNotEmpty()) {
+                shpItemName.setText(item.itemName)
             }
-
-            if (curItem!!.itemQuantity != 0L) {
-                shpItemQuantity.setText(curItem!!.itemQuantity.toString())
+            if (item.itemQuantity.toString().isNotEmpty()) {
+                shpItemQuantity.setText(item.itemQuantity.toString())
             }
-
-            if (curItem!!.itemPrice != 0.00) {
-                shpItemName.setText(curItem!!.itemPrice.toString())
+            if (item.itemPrice.toString().isNotEmpty()) {
+                shpItemPrice.setText(item.itemPrice.toString())
             }
         }
 
         dialog.setView(view)
-        dialog.setPositiveButton("Add") { _ : DialogInterface, _ : Int ->
+        dialog.setPositiveButton("Save") { _ : DialogInterface, _ : Int ->
             val text = shpItemName.text.toString()
             //val price = shpItemPrice.text.toString().toDouble()
             var quantity: Long
@@ -93,20 +82,29 @@ class ItemActivity  : AppCompatActivity() {
             }
 
             if (text.isNotEmpty()){
-                addShpListItem(text, quantity, price)
+                if (item != null){
+                    item.itemName = shpItemName.text.toString()
+                    item.itemQuantity = shpItemQuantity.text.toString().toLong()
+                    item.itemPrice = shpItemPrice.text.toString().toDouble()
+                    repository.updateShpItem(item) {
+                        adapter.notifyDataSetChanged()
+                    }
+                } else {
+                    addShpListItem(text, quantity, price)
+                }
             }
 
         }
         dialog.setNegativeButton("Cancel") { _ : DialogInterface, _ : Int ->
-            // TODO shplist add removing item here
+
         }
         dialog.show()
     }
-    // TODO change shpListId to shpItemid
+
     private fun addShpListItem(name: String, quantity: Long, price: Double) {
     //private fun addShpListItem(name: String, quantity: Long, price: Double) {
         val now = Date()
-        val shpList = ShpItem(
+        val shpItem = ShpItem(
             shpListId = shpList.id,
             itemName = name,
             itemQuantity = quantity,
@@ -114,7 +112,7 @@ class ItemActivity  : AppCompatActivity() {
             isCompleted = false,
             createdAt = now.time
         )
-        repository.addShpItem(shpList) {
+        repository.addShpItem(shpItem) {
             adapter.addItem(it)
         }
     }

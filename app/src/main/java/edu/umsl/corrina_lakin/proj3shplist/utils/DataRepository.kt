@@ -60,6 +60,16 @@ object DataRepository {
         }
     }
 
+    // update ShpList
+    fun updateShpList(itemToUpdate: ShpList, callback: () -> Unit) {
+        executor.execute {
+            database.ShpListDao().updateShpList(itemToUpdate)
+
+            // trigger callback on main ui thread
+            handler.post { callback.invoke() }
+        }
+    }
+
     // add new ShpItem
     fun addShpItem(newItem: ShpItem, callback: (ShpItem) -> Unit) {
         executor.execute {
