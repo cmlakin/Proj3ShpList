@@ -58,11 +58,11 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
         val shpItemQuantity: TextView = v.findViewById(R.id.tv_shpItem_quantity)
         val shpItemPrice: TextView = v.findViewById(R.id.tv_shpItem_price)
         val moreButton: ImageView = v.findViewById(R.id.btn_more)
-        private lateinit var ShpItem: ShpItem
+        private lateinit var shpItem: ShpItem
         private val repository = DataRepository
 
         fun bindShpList(item: ShpItem) {
-            ShpItem = item
+            shpItem = item
             shpItemName.text = item.itemName
             shpItemQuantity.text = item.itemQuantity.toString()
             shpItemPrice.text = item.itemPrice.toString()
@@ -90,27 +90,27 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
             // check which menu item was clicked
             return when (item.itemId) {
                 R.id.deleteShpItem -> {
-                    repository.deleteShpItem(ShpItem) {
-                        val position = list.indexOf(ShpItem)
+                    repository.deleteShpItem(shpItem) {
+                        val position = list.indexOf(shpItem)
                         list.removeAt(position)
                         notifyItemRemoved(position)
-                        toast("Deleted ${ShpItem.itemName}")
+                        toast("Deleted ${shpItem.itemName}")
                     }
                     true
                 }
 
                 R.id.markAsCompleted -> {
-                    val updatedItem = ShpItem.copy(isCompleted = true)
+                    val updatedItem = shpItem.copy(isCompleted = true)
                     repository.updateShpItem(updatedItem) {
                         // get the current position
-                        val position = list.indexOf(ShpItem)
+                        val position = list.indexOf(shpItem)
                         // remove old item
                         list.removeAt(position)
 
                         // add updated item
                         list.add(position, updatedItem)
                         // set update item
-                        ShpItem = updatedItem
+                        shpItem = updatedItem
                         // notify adapter of change
                         notifyItemChanged(position)
 
@@ -120,17 +120,17 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
                 }
 
                 R.id.markAsNotCompleted -> {
-                    val updatedItem = ShpItem.copy(isCompleted = false)
+                    val updatedItem = shpItem.copy(isCompleted = false)
                     repository.updateShpItem(updatedItem) {
                         // get the current position
-                        val position = list.indexOf(ShpItem)
+                        val position = list.indexOf(shpItem)
                         // remove old item
                         list.removeAt(position)
 
                         // add updated item
                         list.add(position, updatedItem)
                         // set update item
-                        ShpItem = updatedItem
+                        shpItem = updatedItem
                         // notify adapter of change
                         notifyItemChanged(position)
 
@@ -138,10 +138,10 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
                     }
                     true
                 }
-                // TODO update item
+
                 R.id.updateEditItem -> {
 
-                    (context as ItemActivity).createNewShpItem(this.ShpItem)
+                    (context as ShpItemActivity).createNewShpItem(this.shpItem)
 
                     true
                 }

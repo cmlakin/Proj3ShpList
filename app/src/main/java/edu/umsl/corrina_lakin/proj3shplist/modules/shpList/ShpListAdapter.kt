@@ -1,4 +1,4 @@
-package edu.umsl.corrina_lakin.proj3shplist.modules.dashboard
+package edu.umsl.corrina_lakin.proj3shplist.modules.shpList
 
 import android.content.Context
 import android.content.Intent
@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import edu.umsl.corrina_lakin.proj3shplist.R
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
-import edu.umsl.corrina_lakin.proj3shplist.modules.shpitem.ItemActivity
+import edu.umsl.corrina_lakin.proj3shplist.modules.shpitem.ShpItemActivity
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 
 
@@ -73,7 +73,7 @@ class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
                 moreButton -> createPopupMenu()
             }
         }
-        // TODO need to set up an update of original list
+
         override fun onMenuItemClick(item: MenuItem): Boolean {
             // check which menu item was clicked
             return when (item.itemId) {
@@ -88,7 +88,7 @@ class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
                 }
 
                 R.id.updateShpList -> {
-                    toast("Clicked Update")
+                    (context as ShpListActivity).createNewShpList(this.shpList)
                     true
                 }
 
@@ -109,8 +109,8 @@ class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
 
 
         private fun navigateToItemList() {
-            val intent = Intent(context, ItemActivity::class.java)
-            intent.putExtra(ItemActivity.KEY_SHP_LIST, shpList)
+            val intent = Intent(context, ShpItemActivity::class.java)
+            intent.putExtra(ShpItemActivity.KEY_SHP_LIST, shpList)
             context.startActivity(intent)
         }
 

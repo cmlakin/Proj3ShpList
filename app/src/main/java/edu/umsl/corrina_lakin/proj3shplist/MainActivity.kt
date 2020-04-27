@@ -3,7 +3,7 @@ package edu.umsl.corrina_lakin.proj3shplist
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import edu.umsl.corrina_lakin.proj3shplist.modules.dashboard.DashboardActivity
+import edu.umsl.corrina_lakin.proj3shplist.modules.shpList.ShpListActivity
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
 
         // initialize database
         DataRepository.createDatabse(this)
-        startActivity(Intent(this, DashboardActivity::class.java))
+        startActivity(Intent(this, ShpListActivity::class.java))
     }
 }

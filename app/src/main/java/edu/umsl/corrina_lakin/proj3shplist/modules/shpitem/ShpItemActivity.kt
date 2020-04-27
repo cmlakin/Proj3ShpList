@@ -14,7 +14,7 @@ import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 import kotlinx.android.synthetic.main.activity_item.*
 import java.util.*
 
-class ItemActivity  : AppCompatActivity() {
+class ShpItemActivity  : AppCompatActivity() {
 
     private val repository= DataRepository
     private lateinit var adapter: ShpItemAdapter
@@ -96,7 +96,7 @@ class ItemActivity  : AppCompatActivity() {
 
         }
         dialog.setNegativeButton("Cancel") { _ : DialogInterface, _ : Int ->
-            // TODO shplist add removing item here
+
         }
         dialog.show()
     }
