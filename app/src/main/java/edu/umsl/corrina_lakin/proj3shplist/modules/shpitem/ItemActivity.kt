@@ -19,7 +19,7 @@ class ItemActivity  : AppCompatActivity() {
     private val repository= DataRepository
     private lateinit var adapter: ShpItemAdapter
     lateinit var shpList: ShpList
-    lateinit var curItem: ShpItem
+    private var curItem: ShpItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -59,17 +59,19 @@ class ItemActivity  : AppCompatActivity() {
         val shpItemQuantity = view.findViewById<EditText>(R.id.ev_shpItemQuantity)
         val shpItemPrice = view.findViewById<EditText>(R.id.ev_shpItemPrice)
 
-//        if (curItem.itemName != ""){
-//            shpItemName.setText(curItem.itemName)
-//        }
-//
-//        if (curItem.itemQuantity != 0L){
-//            shpItemQuantity.setText(curItem.itemQuantity.toString())
-//        }
-//
-//        if (curItem.itemPrice != 0.00){
-//            shpItemName.setText(curItem.itemPrice.toString())
-//        }
+        if ( curItem is ShpItem) {
+            if (curItem!!.itemName != "") {
+                shpItemName.setText(curItem!!.itemName)
+            }
+
+            if (curItem!!.itemQuantity != 0L) {
+                shpItemQuantity.setText(curItem!!.itemQuantity.toString())
+            }
+
+            if (curItem!!.itemPrice != 0.00) {
+                shpItemName.setText(curItem!!.itemPrice.toString())
+            }
+        }
 
         dialog.setView(view)
         dialog.setPositiveButton("Add") { _ : DialogInterface, _ : Int ->
