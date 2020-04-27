@@ -1,6 +1,8 @@
 package edu.umsl.corrina_lakin.proj3shplist.data.models
 
+import android.os.Parcelable
 import androidx.room.*
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 
@@ -9,6 +11,8 @@ import java.util.*
     foreignKeys = [
         ForeignKey(entity = ShpList::class, parentColumns = ["id"], childColumns = ["shpListId"], onDelete = ForeignKey.CASCADE)
     ])
+
+@Parcelize
 data class ShpItem(
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0,
@@ -19,7 +23,9 @@ data class ShpItem(
     var itemPrice: Double,
     var isCompleted: Boolean,
     var createdAt: Long
-) {
+) : Parcelable
+
+{
     @Ignore
     val dateAsString: Date
 
