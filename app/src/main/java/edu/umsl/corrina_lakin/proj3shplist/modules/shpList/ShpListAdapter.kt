@@ -17,7 +17,7 @@ import edu.umsl.corrina_lakin.proj3shplist.modules.shpitem.ShpItemActivity
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 
 
-class ShpListAdapter() : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
+class ShpListAdapter : RecyclerView.Adapter<ShpListAdapter.ViewHolder>() {
     val list: MutableList<ShpList> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
