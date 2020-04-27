@@ -1,8 +1,6 @@
 package edu.umsl.corrina_lakin.proj3shplist.modules.shpitem
 
 import android.content.Context
-import android.content.Intent
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.umsl.corrina_lakin.proj3shplist.R
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpItem
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
-import kotlinx.android.parcel.Parcelize
 
 
 class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
@@ -52,6 +49,7 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
         list.add(ShpList)
         notifyItemInserted(list.size - 1)
     }
+
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
@@ -143,9 +141,7 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
                 // TODO update item
                 R.id.updateEditItem -> {
 
-                    //val intent = Intent(this, ItemActivity::class.java)
-                    val itemIntent = Intent(this.context, ItemActivity::class.java)
-                    itemIntent.putExtra("item_extra", ShpItem)
+                    (context as ItemActivity).createNewShpItem(this.ShpItem)
 
                     true
                 }

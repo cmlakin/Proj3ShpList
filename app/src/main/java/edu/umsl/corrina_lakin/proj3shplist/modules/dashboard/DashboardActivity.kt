@@ -41,7 +41,7 @@ class DashboardActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
         val shpListName = view.findViewById<EditText>(R.id.ev_shpList)
         dialog.setView(view)
-        dialog.setPositiveButton("Add") { _ : DialogInterface, _ : Int ->
+        dialog.setPositiveButton("Save") { _ : DialogInterface, _ : Int ->
             val text = shpListName.text.toString()
             if (text.isNotEmpty()){
                 addShpList(text)
