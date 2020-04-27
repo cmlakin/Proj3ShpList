@@ -1,6 +1,8 @@
 package edu.umsl.corrina_lakin.proj3shplist.modules.shpitem
 
 import android.content.Context
+import android.content.Intent
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.umsl.corrina_lakin.proj3shplist.R
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpItem
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
+import kotlinx.android.parcel.Parcelize
 
 
 class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
@@ -53,30 +56,34 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
         val context: Context = v.context
-        val shpListName: TextView = v.findViewById(R.id.tv_shpList_name)
+        val shpItemName: TextView = v.findViewById(R.id.tv_shpItem_name)
+        val shpItemQuantity: TextView = v.findViewById(R.id.tv_shpItem_quantity)
+        val shpItemPrice: TextView = v.findViewById(R.id.tv_shpItem_price)
         val moreButton: ImageView = v.findViewById(R.id.btn_more)
         private lateinit var ShpItem: ShpItem
         private val repository = DataRepository
 
         fun bindShpList(item: ShpItem) {
             ShpItem = item
-            shpListName.text = item.itemName
+            shpItemName.text = item.itemName
+            shpItemQuantity.text = item.itemQuantity.toString()
+            shpItemPrice.text = item.itemPrice.toString()
 
             val color =
                 if (item.isCompleted) R.color.colorAccent
                 else  R.color.colorPrimary
 
             val actualColor = ContextCompat.getColor(context, color)
-            shpListName.setTextColor(actualColor)
+            shpItemName.setTextColor(actualColor)
 
-            shpListName.setOnClickListener(this)
+            shpItemName.setOnClickListener(this)
             moreButton.setOnClickListener(this)
         }
 
         override fun onClick(view: View) {
             // check which view was clicked
             when (view) {
-                shpListName -> navigateShpListItemList()
+                shpItemName -> navigateShpListItemList()
                 moreButton -> createPopupMenu()
             }
         }
@@ -109,8 +116,37 @@ class ShpItemAdapter() : RecyclerView.Adapter<ShpItemAdapter.ViewHolder>() {
                         // notify adapter of change
                         notifyItemChanged(position)
 
-                        toast("Clicked Update")
+                        toast("Marked Complete")
                     }
+                    true
+                }
+
+                R.id.markAsNotCompleted -> {
+                    val updatedItem = ShpItem.copy(isCompleted = false)
+                    repository.updateShpItem(updatedItem) {
+                        // get the current position
+                        val position = list.indexOf(ShpItem)
+                        // remove old item
+                        list.removeAt(position)
+
+                        // add updated item
+                        list.add(position, updatedItem)
+                        // set update item
+                        ShpItem = updatedItem
+                        // notify adapter of change
+                        notifyItemChanged(position)
+
+                        toast("Marked Not Complete")
+                    }
+                    true
+                }
+                // TODO update item
+                R.id.updateEditItem -> {
+
+                    //val intent = Intent(this, ItemActivity::class.java)
+                    val itemIntent = Intent(this.context, ItemActivity::class.java)
+                    itemIntent.putExtra("item_extra", ShpItem)
+
                     true
                 }
 

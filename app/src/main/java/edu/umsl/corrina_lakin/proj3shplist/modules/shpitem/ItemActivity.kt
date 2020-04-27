@@ -11,6 +11,7 @@ import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpItem
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
 import kotlinx.android.synthetic.main.activity_item.*
+import java.lang.Exception
 import java.util.*
 
 class ItemActivity  : AppCompatActivity() {
@@ -18,12 +19,22 @@ class ItemActivity  : AppCompatActivity() {
     private val repository= DataRepository
     private lateinit var adapter: ShpItemAdapter
     lateinit var shpList: ShpList
+    private var curItem: ShpItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item)
 
         shpList = intent.getParcelableExtra(KEY_SHP_LIST)
+
+//        try{
+//            if (intent.getParcelableExtra<ShpItem>("item_extra") != null){
+//                curItem = intent.getParcelableExtra("item_extra")
+//            }
+//        } catch (e: Exception){
+//
+//        }
+
 
         setSupportActionBar(item_toolbar)
         // toolbar button as back arrow
@@ -43,29 +54,63 @@ class ItemActivity  : AppCompatActivity() {
 
     private fun createNewShpItem() {
         val dialog = AlertDialog.Builder(this)
-        val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
-        val shpListName = view.findViewById<EditText>(R.id.ev_shpList)
+        val view = layoutInflater.inflate(R.layout.dialog_child_dashboard, null)
+        val shpItemName = view.findViewById<EditText>(R.id.ev_shpItemName)
+        val shpItemQuantity = view.findViewById<EditText>(R.id.ev_shpItemQuantity)
+        val shpItemPrice = view.findViewById<EditText>(R.id.ev_shpItemPrice)
+
+        if ( curItem is ShpItem) {
+            if (curItem!!.itemName != "") {
+                shpItemName.setText(curItem!!.itemName)
+            }
+
+            if (curItem!!.itemQuantity != 0L) {
+                shpItemQuantity.setText(curItem!!.itemQuantity.toString())
+            }
+
+            if (curItem!!.itemPrice != 0.00) {
+                shpItemName.setText(curItem!!.itemPrice.toString())
+            }
+        }
+
         dialog.setView(view)
         dialog.setPositiveButton("Add") { _ : DialogInterface, _ : Int ->
-            val text = shpListName.text.toString()
-            if (text.isNotEmpty()){
-                addShpListItem(text)
+            val text = shpItemName.text.toString()
+            //val price = shpItemPrice.text.toString().toDouble()
+            var quantity: Long
+            var price: Double
+            //var quantity = shpItemQuantity.text.toString().toLong()
+            if (shpItemQuantity.text.isNotEmpty()){
+                quantity = shpItemQuantity.text.toString().toLong()
+            } else {
+                quantity = 0
             }
+
+            if (shpItemPrice.text.isNotEmpty()){
+                price = shpItemPrice.text.toString().toDouble()
+            } else {
+                price = 0.00
+            }
+
+            if (text.isNotEmpty()){
+                addShpListItem(text, quantity, price)
+            }
+
         }
         dialog.setNegativeButton("Cancel") { _ : DialogInterface, _ : Int ->
             // TODO shplist add removing item here
         }
         dialog.show()
     }
-
-    private fun addShpListItem(name: String) {
+    // TODO change shpListId to shpItemid
+    private fun addShpListItem(name: String, quantity: Long, price: Double) {
     //private fun addShpListItem(name: String, quantity: Long, price: Double) {
         val now = Date()
         val shpList = ShpItem(
             shpListId = shpList.id,
             itemName = name,
-//            itemQuantity = quantity,
-//            itemPrice = price,
+            itemQuantity = quantity,
+            itemPrice = price,
             isCompleted = false,
             createdAt = now.time
         )

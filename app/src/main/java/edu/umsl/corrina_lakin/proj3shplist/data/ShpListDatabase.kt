@@ -11,7 +11,7 @@ import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
 
 @Database(
     entities = [ShpList::class, ShpItem::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class ShpListDatabase: RoomDatabase() {
