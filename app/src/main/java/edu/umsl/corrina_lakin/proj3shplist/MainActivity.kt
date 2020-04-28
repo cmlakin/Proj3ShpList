@@ -5,8 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import edu.umsl.corrina_lakin.proj3shplist.modules.shpList.ShpListActivity
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,6 +16,13 @@ class MainActivity : AppCompatActivity() {
 
         // initialize database
         DataRepository.createDatabse(this)
-        startActivity(Intent(this, ShpListActivity::class.java))
+        val intent = Intent(this, ShpListActivity::class.java)
+        val timer = Timer()
+        val task = object : TimerTask(){
+            override fun run() {
+                startActivity(intent)
+            }
+        }
+        timer.schedule(task, 2000)
     }
 }

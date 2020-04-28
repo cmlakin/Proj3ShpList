@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="horizontal"
     android:layout_gravity="center"
-    >
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
 
 
     <TextView
@@ -23,19 +21,15 @@
         android:layout_marginTop="101dp"
         android:gravity="center"
         android:text="Shopping List App"
-        android:textStyle="bold"
-        android:textSize="35sp"
         android:textColor="@color/colorPrimaryDark"
-        />
+        android:textSize="35sp"
+        android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/btn_more"
+        android:id="@+id/btn_main"
         android:layout_width="190dp"
         android:layout_height="195dp"
         android:layout_centerInParent="true"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="10dp"
         android:src="@drawable/ic_main" />
 

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import edu.umsl.corrina_lakin.proj3shplist.R
 import edu.umsl.corrina_lakin.proj3shplist.data.models.ShpList
 import edu.umsl.corrina_lakin.proj3shplist.utils.DataRepository
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_shplist.*
 
 class ShpListActivity : AppCompatActivity() {
 
@@ -21,9 +21,9 @@ class ShpListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        setContentView(R.layout.activity_shplist)
         setSupportActionBar(dashboard_toolbar)
-        title = "Dashboard"
+        title = "Shopping List's:"
 
         adapter = ShpListAdapter()
         rv_dashboard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

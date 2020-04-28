@@ -15,7 +15,10 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
-            tools:text="Sample text"
+            tools:text="@string/placeholder"
+            android:textSize="18sp"
+            android:textColor="#2196F3"
+            android:textStyle="bold"
             />
 
         <ImageView
