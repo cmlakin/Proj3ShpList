@@ -31,7 +31,7 @@ class ShpItemActivity  : AppCompatActivity() {
         // toolbar button as back arrow
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.title = shpList.name
+        supportActionBar?.title = shpList.name + " items"
 
         adapter = ShpItemAdapter()
         rv_item.adapter = adapter

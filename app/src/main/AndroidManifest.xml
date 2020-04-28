@@ -10,8 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".modules.shpList.ShpListActivity"
-            android:label="@string/title_activity_dashboard" />
+            android:name=".modules.shpList.ShpListActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
