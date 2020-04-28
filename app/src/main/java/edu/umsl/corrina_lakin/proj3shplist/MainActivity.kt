@@ -21,8 +21,13 @@ class MainActivity : AppCompatActivity() {
         val task = object : TimerTask(){
             override fun run() {
                 startActivity(intent)
+                finish()
             }
         }
         timer.schedule(task, 2000)
+
     }
+
 }
+
+
